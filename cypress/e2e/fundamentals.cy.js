@@ -1,12 +1,31 @@
 describe("Fundamentals test", () => {
-  it("Contains correct header text", () => {
+  beforeEach(() => {
     cy.visit("/fundamentals");
-    // cy.get('[data-test="funtamentals-header"]').contains(
-    //   /Testing fundamentals/i
-    // );
-    cy.get('[data-test="funtamentals-header"]').should(
+  });
+  it("Contains correct header text", () => {
+    cy.getDataTest("fundamentals-header").should(
       "contain.text",
       "Testing Fundamentals"
+    );
+  });
+  // cy.get('[data-test="funtamentals-header"]').contains(
+  //   /Testing fundamentals/i
+  // );
+  // cy.get('[data-test="funtamentals-header"]').should(
+  //   "contain.text",
+  //   "Testing Fundamentals"
+  // );
+  it("Accordion works correctly", () => {
+    cy.contains(/Your tests will exist in a describe block/i).should(
+      "not.be.visible"
+    );
+    cy.get('[data-test="accordion-item-1"] div[role="button"]').click();
+    cy.contains(/Your tests will exist in a describe block/i).should(
+      "be.visible"
+    );
+    cy.get('[data-test="accordion-item-1"] div[role="button"]').click();
+    cy.contains(/Your tests will exist in a describe block/i).should(
+      "not.be.visible"
     );
   });
 });
